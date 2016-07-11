@@ -350,6 +350,13 @@
                     $scope.focus = "gif";
                 });
             });
+            //Show Snow White
+            addCommand('show_fairest', function(img) {
+                GiphyService.fairest().then(function(){
+                    $scope.gifimg = GiphyService.giphyImg();
+                    $scope.focus = "gif";
+                });
+            });
 
             //Show fitbit stats (registered only if fitbit is configured in the main config)
             if ($scope.fitbitEnabled) {

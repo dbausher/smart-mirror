@@ -110,6 +110,11 @@
             "voice": "giphy *img",
             "description": "Shows a giphy image"
         },
+        "show_fairest":{
+            "text":"Who is the fairest?",
+            "voice": "(magic mirror on the wall)(mirror mirror on the wall)(,) Who is the fairest (of them)(one of)(all)(?)",
+            "description": " Shows the fairest one of all."
+        },
         "image_comic": {
             "text": "Show xkcd",
             "voice": "Show xkcd",
