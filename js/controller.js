@@ -19,6 +19,10 @@
             RssService,
             $rootScope, $scope, $timeout, $interval, tmhDynamicLocale, $translate) {
         var _this = this;
+        const mqtt = require('mqtt');
+        const client = mqtt.connect('mqtt://broker.hivemq.com');
+
+
         $scope.listening = false;
         $scope.debug = false;
         $scope.focus = "default";
@@ -44,6 +48,18 @@
         function updateTime(){
             $scope.date = new moment();
         }
+        $scope.bathroomDoor = {title: "bathroom door status", content: "?", lastUpdated: $scope.date }
+        client.on('connect', () => {  
+            client.subscribe('dbmirror/test')
+            });
+        client.on('message', (topic, message) => {  
+            if(topic === 'dbmirror/test') {
+            console.log(message.toString());
+            var currentTime = new moment();
+            $scope.bathroomDoor.content = message.toString();
+            $scope.bathroomDoor.lastUpdated = currentTime;
+            }
+        });
 
         // Reset the command text
         var restCommand = function(){
@@ -179,7 +195,7 @@
 
             var updateNews = function() {
                 $scope.shownews = false;
-                setTimeout(function(){ $scope.news = RssService.getNews(); $scope.shownews = true; }, 1000);
+                setTimeout(function(){ $scope.news = $scope.bathroomDoor; $scope.shownews = true; }, 1000);
             };
 
             refreshRss();
