@@ -7,7 +7,7 @@ var config = {
     speech : {
         keyword : "Smart Mirror",
         model : "smart mirror.pmdl", // The name of your model
-        sensitivity : 0.5, // keyword getting too many false positives or not detecting? Change this.
+        sensitivity : 0.3, // keyword getting too many false positives or not detecting? Change this.
         continuous: false // After a keyword is detected keep listening until speech is not heard
     },
     layout: "main",
