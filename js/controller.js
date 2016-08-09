@@ -132,7 +132,7 @@
         }
 
         var takePic = function(){
-            Webcam.capture("faces/testimg.jpg",function(){
+            Webcam.capture("faces/testimg.JPG",function(){
                     whosThere();
                 });
             }
