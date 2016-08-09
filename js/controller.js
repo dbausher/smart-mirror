@@ -147,6 +147,7 @@
                         //console.log(response[0]['candidates'][0]['personId']);
                         if (response.length > 0){
                             user = profiles[response[0]['candidates'][0]['personId']];
+                            greetingUpdater();
                         }
                         else{
                             user = "Failed to be";
