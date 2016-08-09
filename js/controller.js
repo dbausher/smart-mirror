@@ -140,7 +140,7 @@
             cam.start();
             cam.capture(function (success) {
               var frame = cam.frameRaw();
-              require("fs").createWriteStream("result.jpg").end(Buffer(frame));
+              require("fs").createWriteStream("faces/testimg.jpg").end(Buffer(frame));
               cam.stop();
             });
         }
