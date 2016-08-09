@@ -57,11 +57,7 @@
 
         // LINUX ONLY
         var NodeWebcam = require( "node-webcam" );
-        var opts = {
-
-            location: "faces/"
-
-        };
+        var opts = { location: "faces/" };
         var Webcam = NodeWebcam.create( opts );
 
 
@@ -136,11 +132,10 @@
         }
 
         var takePic = function(){
-            Webcam.capture( "testimg.jpg" ).then(function(){
+            Webcam.capture("testimg.jpg").then(function(){
                     whosThere();
                 });
             }
-        }
 
 
         var whosThere = function(){
