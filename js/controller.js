@@ -56,14 +56,13 @@
         }
 
         // LINUX ONLY
+        var NodeWebcam = require( "node-webcam" );
+        var opts = {
 
-        var v4l2camera = require("v4l2camera");
+            location: "faces/"
 
-        var cam = new v4l2camera.Camera("/dev/video0");
-        if (cam.configGet().formatName !== "MJPG") {
-            console.log("NOTICE: MJPG camera required");
-            process.exit(1);
-        }
+        };
+        var Webcam = NodeWebcam.create( opts );
 
 
 
@@ -137,12 +136,10 @@
         }
 
         var takePic = function(){
-            cam.start();
-            cam.capture(function (success) {
-              var frame = cam.frameRaw();
-              require("fs").createWriteStream("faces/testimg.jpg").end(Buffer(frame));
-              cam.stop();
-            });
+            Webcam.capture( "testimg.jpg" ).then(function(){
+                    whosThere();
+                });
+            }
         }
 
 
@@ -530,7 +527,7 @@
                 user = 'Attempting to be'
                 console.debug('Taking picture and Identifying');
                 //take a photo needs to be implemented
-                whosThere();
+                takePic();
             });
 
             addCommand('log_out',function(){
