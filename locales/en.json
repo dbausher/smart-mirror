@@ -3,7 +3,7 @@
         "commands" : "Say \"What can I say?\" to see a list of commands..."
     },
     "traffic" : {
-        "time_to" : "Time to {{name}}: "
+        "time_to" : "{{name}} logged in."
     },
     "reminders": {
         "empty": "Empty list"
@@ -114,6 +114,16 @@
             "text":"Who is the fairest?",
             "voice": "(magic mirror on the wall)(mirror mirror on the wall)(,) Who is the fairest (of them)(one of)(all)(?)",
             "description": " Shows the fairest one of all."
+        },
+        "log_in":{
+            "text":"Log me in.",
+            "voice": "log (me) in",
+            "description": "Tries to log you in."
+        },
+        "log_out":{
+            "text":"Log me out.",
+            "voice": "log (me) out",
+            "description": "Logs you out."
         },
         "image_comic": {
             "text": "Show xkcd",

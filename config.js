@@ -19,7 +19,9 @@ var config = {
        night: ["Bed?", "zZzzZz", "Time to sleep"],
        morning: ["Good Morning", "Greetings, commander"],
        midday: ["Hey!", "Hello", "Whazzup?"],
-       evening: ["Hi, sexy!","Good evening"]
+       evening: ["Hi, sexy!","Good evening"],
+       Daniel: ["Yo Daniel", "Suit Up!"],
+       Victor: ['Ser Victor', "Salutations"]
     },
 
 

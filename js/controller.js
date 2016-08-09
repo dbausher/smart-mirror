@@ -20,8 +20,22 @@
             $rootScope, $scope, $timeout, $interval, tmhDynamicLocale, $translate) {
         var _this = this;
         const mqtt = require('mqtt');
+        const request = require('request');
         const client = mqtt.connect('mqtt://broker.hivemq.com');
 
+        const oxford = require('project-oxford');
+        const oxclient = new oxford.Client('6ced1e1c9767493c89426d2fc4043995');
+
+        var people = ["Victor","Daniel"];
+        var groupID = 'mirrorusers';
+        var added = 0;
+        var trained = false;
+        var trainId;
+        var checkTrainId;
+        var whosThereId;
+        var user = 'Not ready to be';
+        var profiles = {};
+        var done = false;
 
         $scope.listening = false;
         $scope.debug = false;
@@ -29,6 +43,7 @@
         $scope.user = {};
         $scope.shownews = true;
         $scope.commands = [];
+        
         /*$translate('home.commands').then(function (translation) {
             $scope.interimResult = translation;
         });*/
@@ -39,6 +54,128 @@
         if (typeof config.fitbit != 'undefined') {
             $scope.fitbitEnabled = true;
         }
+
+        // LINUX ONLY
+
+        var v4l2camera = require("v4l2camera");
+
+        var cam = new v4l2camera.Camera("/dev/video0");
+        if (cam.configGet().formatName !== "MJPG") {
+            console.log("NOTICE: MJPG camera required");
+            process.exit(1);
+        }
+
+
+
+
+        // oxclient.face.detect({path:'faces/' + people[1] + '/face1.JPG',analyzesAge:false,analyzesGender:false}).then(function(response){
+        //     console.log(response);
+        // });
+
+        function checkFam(){
+            //console.log('hello')
+            //$scope.traffic = {time_to: 'Initializing, please wait to log in'};
+            oxclient.face.personGroup.list().then(function(response){
+                //console.log(response);
+                if(response.length > 0 && response[0]['personGroupId'] == groupID){
+                    //console.log('tere');
+                    oxclient.face.personGroup.delete(groupID).then(function(response){
+                        makeFam();
+                    });
+                }
+                else{
+                    //console.log('nun');
+                    makeFam();
+                }
+            });
+        }
+
+        function makeFam(){
+            oxclient.face.personGroup.create(groupID,"Mirror Users","").then(function(response,err){
+                if(err) throw Error;
+                //console.log('from');
+                for (var i = 0; i < people.length;i++){
+                    //console.log('the');
+                    //console.log(people[i]);
+                    addFam(people[i]);
+                }
+
+            });
+        }
+
+        function addFam(name){
+            oxclient.face.person.create(groupID,name,"").then(function(response){
+                        //console.log(response);
+                        //console.log(response['personId']);
+                        //console.log(name);
+                        profiles[response['personId']] = name;
+                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face1.JPG'}).then(function(response){added++;});
+                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face2.JPG'}).then(function(response){added++;});
+                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face3.JPG'}).then(function(response){added++;});
+                    });
+        }
+
+        var startTraining = function(){
+            console.log(added)
+            if(added == people.length*3){
+                //console.log(added)
+                oxclient.face.personGroup.trainingStart(groupID);
+                $interval.cancel(trainId);
+                console.log('no more added')
+                checkTrainId = $interval(checkTraining, 5000);
+            }
+        }
+
+        var checkTraining = function(){
+            oxclient.face.personGroup.trainingStatus(groupID).then(function(response){
+                console.log(response);
+                if(response['status'] == 'succeeded'){
+                    $interval.cancel(checkTrainId);
+                    user = 'Ready to be';
+                }
+            })
+        }
+
+        var takePic = function)(){
+            cam.start();
+            cam.capture(function (success) {
+              var frame = cam.frameRaw();
+              require("fs").createWriteStream("result.jpg").end(Buffer(frame));
+              cam.stop();
+            });
+        }
+
+
+        var whosThere = function(){
+            oxclient.face.detect({'path':'faces/testimg.JPG','returnFaceId':true}).then(function(response){
+                console.log(response);
+                if (response.length > 0){
+                    oxclient.face.identify([response[0]['faceId']],groupID).then(function(response,err){
+                        if(err){throw Error}
+                        //console.log(response[0]['candidates'][0]['personId']);
+                        if (response.length > 0){
+                            user = profiles[response[0]['candidates'][0]['personId']];
+                        }
+                        else{
+                            user = "Failed to be";
+                        }
+                    });
+                }
+                else{
+                    console.log('nobody there')
+                    user = 'Failed to be';
+                }
+                
+            });
+        }
+        checkFam();
+        trainId = $interval(startTraining,18000);
+
+
+        
+
+        
+
 
         //set lang
         moment.locale((typeof config.language != 'undefined')?config.language.substring(0, 2).toLowerCase(): 'en');
@@ -76,6 +213,8 @@
                 $scope.map = MapService.generateMap(geoposition.coords.latitude+','+geoposition.coords.longitude);
             });
             restCommand();
+
+
 
             //Initialize SoundCloud
             var playing = false, sound;
@@ -145,6 +284,11 @@
                     } else if (hour >= 23 || hour < 4) {
                         greetingTime = "night";
                     }
+
+                    if(people.indexOf(user) > -1){
+                        greetingTime = user;
+                    }
+
                     var nextIndex = Math.floor(Math.random() * config.greeting[greetingTime].length);
                     var nextGreeting = config.greeting[greetingTime][nextIndex]
                     $scope.greeting = nextGreeting;
@@ -156,18 +300,26 @@
             $interval(greetingUpdater, 120000);
 
             var refreshTrafficData = function() {
-                TrafficService.getDurationForTrips().then(function(tripsWithTraffic) {
-                    console.log("Traffic", tripsWithTraffic);
-                    //Todo this needs to be an array of traffic objects -> $trips[]
-                    $scope.trips = tripsWithTraffic;
-                }, function(error){
-                    $scope.traffic = {error: error};
-                });
+                if(done){
+                    $scope.trips[0].name = user;
+                }
+                else{
+                    TrafficService.getDurationForTrips().then(function(tripsWithTraffic) {
+                        console.log("Traffic", tripsWithTraffic);
+                        //Todo this needs to be an array of traffic objects -> $trips[]
+                        $scope.trips = tripsWithTraffic;
+                        $scope.trips[0].name = user;
+                        done = true;
+                    }, function(error){
+                        $scope.traffic = {error: error};
+                    });                    
+                }
+                
             };
 
             if(typeof config.traffic != 'undefined'){
                 refreshTrafficData();
-                $interval(refreshTrafficData, config.traffic.reload_interval * 60000);    
+                $interval(refreshTrafficData, config.traffic.reload_interval * 1000);    
             }
 
             var refreshComic = function () {
@@ -372,6 +524,18 @@
                     $scope.gifimg = GiphyService.giphyImg();
                     $scope.focus = "gif";
                 });
+            });
+
+            addCommand('log_in',function() {
+                user = 'Attempting to be'
+                console.debug('Taking picture and Identifying');
+                //take a photo needs to be implemented
+                whosThere();
+            });
+
+            addCommand('log_out',function(){
+                user = 'Nobody';
+
             });
 
             //Show fitbit stats (registered only if fitbit is configured in the main config)
