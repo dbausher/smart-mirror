@@ -136,7 +136,7 @@
             })
         }
 
-        var takePic = function)(){
+        var takePic = function(){
             cam.start();
             cam.capture(function (success) {
               var frame = cam.frameRaw();
