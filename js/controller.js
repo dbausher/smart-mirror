@@ -63,9 +63,9 @@
         }
 
         // LINUX ONLY
-        var NodeWebcam = require( "node-webcam" );
-        var opts = { location: "faces/" };
-        var Webcam = NodeWebcam.create( opts );
+        // var NodeWebcam = require( "node-webcam" );
+        // var opts = { location: "faces/" };
+        // var Webcam = NodeWebcam.create( opts );
 
 
 
