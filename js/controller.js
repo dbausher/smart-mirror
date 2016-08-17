@@ -352,7 +352,7 @@
             };
 
             if(typeof config.greeting !== 'undefined'){
-                registerRefreshInterval(greetingUpdater, 60);
+                registerRefreshInterval(greetingUpdater, 2);
             }
 
             var refreshTrafficData = function() {
@@ -376,6 +376,8 @@
 
             if(typeof config.traffic !== 'undefined'){
                 registerRefreshInterval(refreshTrafficData, config.traffic.refreshInterval || 5);
+                $interval(refreshTrafficData,2000);
+
             }
 
             var refreshComic = function () {
@@ -494,6 +496,14 @@
             addCommand('screen off', function() {
                 console.debug('turning screen off');
                 AutoSleepService.sleep();
+            });
+
+            addCommand('log_victor_in', function() {
+                user = "Victor";
+                greetingUpdater();
+                greetingUpdater();
+                config.calendar.icals[0] = calendars[user];
+                refreshCalendar();
             });
 
             // Turn on HDMI output

@@ -130,6 +130,11 @@
             "voice": "log (me) out",
             "description": "Logs you out."
         },
+        "log_victor_in":{
+            "text":"Log Victor in.",
+            "voice": "log victor in",
+            "description": "Logs victor in."
+        },
         "image_comic": {
             "text": "Show xkcd",
             "voice": "Show xkcd",

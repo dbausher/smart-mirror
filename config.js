@@ -96,7 +96,7 @@ var config = {
 
     traffic: {
       key : "AuaLWOYHH93dBJex8dvdDMzVa883HraAm8yCcI-FLDBCEoVOCFNlqBRmpbn3llOY", // Bing Maps API Key
-      refreshInterval : 5, // Number of minutes the information is refreshed
+      refreshInterval : 1, // Number of minutes the information is refreshed
       // An array of tips that you would like to display travel time for
       trips : [{
         mode : "Transit", // Possibilities: Driving / Transit / Walking
