@@ -5,9 +5,9 @@ var config = {
      
     // Keyword Spotting (Hotword Detection)
     speech : {
-        keyword : "Smart Mirror",
-        model : "smart mirror.pmdl", // The name of your model
-        sensitivity : 0.3, // keyword getting too many false positives or not detecting? Change this.
+        keyword : "Magic Mirror",
+        model : "Magic Mirror.pmdl", // The name of your model
+        sensitivity : 0.5, // keyword getting too many false positives or not detecting? Change this.
         continuous: false // After a keyword is detected keep listening until speech is not heard
     },
     layout: "main",
@@ -116,7 +116,7 @@ var config = {
       names: [] // The names of the stock quotes you with to show in the official format. (e.g.: 'YHOO','AAPL','GOOG')
     },
     autoTimer: {
-      autoSleep: 2400000, // How long the screen will stay awake before going to sleep (40 Mins)
+      autoSleep: 21600000, // How long the screen will stay awake before going to sleep (40 Mins)
       autoWake: '07:00:00', // When to automatically wake the screen up (7:00AM)
       'wake_cmd': '/opt/vc/bin/tvservice -p', // The binary and arguments used on your system to wake the screen
       'sleep_cmd': '/opt/vc/bin/tvservice -o' // The binary and arguments used on your system to sleep the screen

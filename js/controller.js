@@ -65,9 +65,9 @@
         }
 
         // LINUX ONLY
-        var NodeWebcam = require( "node-webcam" );
-        var opts = { location: "faces/" };
-        var Webcam = NodeWebcam.create( opts );
+        // var NodeWebcam = require( "node-webcam" );
+        // var opts = { location: "faces/" };
+        // var Webcam = NodeWebcam.create( opts );
 
 
 
@@ -658,7 +658,11 @@
             });
 
             addCommand('log_out',function(){
-                user = 'Nobody';
+                user = 'Nobody'
+                greetingUpdater();
+                greetingUpdater();
+                config.calendar.icals[0] = "";
+                refreshCalendar();
 
             });
 
