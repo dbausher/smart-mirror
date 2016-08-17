@@ -2,7 +2,7 @@ var config = {
 
     // Lenguage for the mirror
     language : "en-US",
-    
+     
     // Keyword Spotting (Hotword Detection)
     speech : {
         keyword : "Smart Mirror",
@@ -17,11 +17,11 @@ var config = {
  
     greeting : {
        night: ["Bed?", "zZzzZz", "Time to sleep"],
-       morning: ["Good Morning", "Greetings, commander"],
+       morning: ["Good Morning", "Greetings"],
        midday: ["Hey!", "Hello", "Whazzup?"],
        evening: ["Hi, sexy!","Good evening"],
-       Daniel: ["Yo Daniel", "Suit Up!"],
-       Victor: ['Ser Victor', "Salutations"]
+       Daniel: ["Yo Daniel", "Game On!", "Hey Daniel", "Ayy Daniel"],
+       Victor: ['Hey Victor', "Big V", "Mr. Oliveira", "Play Ball!"]
     },
 
 
@@ -76,10 +76,10 @@ var config = {
     */
     // Calendar (An array of iCals)
     calendar: {
-      icals : ["https://calendar.google.com/calendar/ical/9dsr84idhmmvkduu300j9camb4%40group.calendar.google.com/public/basic.ics"], // Be sure to wrap your URLs in quotes
-      maxResults: 9, // Number of calender events to display (Defaults is 9)
-      maxDays: 365 // Number of days to display (Default is one year)
-      showCalendarNames: false // Show calendar names above events
+      icals : ["webcal://mlb.am/tix/redsox_schedule_full"], // Be sure to wrap your URLs in quotes
+      maxResults: 4, // Number of calender events to display (Defaults is 9)
+      maxDays: 365, // Number of days to display (Default is one year)
+      showCalendarNames: true // Show calendar names above events
     },
     // Giphy
     giphy: {
@@ -100,10 +100,10 @@ var config = {
       // An array of tips that you would like to display travel time for
       trips : [{
         mode : "Transit", // Possibilities: Driving / Transit / Walking
-        origin : "Yokohama, Japan", // Start of your trip. Human readable address.
+        origin : "New York, NY", // Start of your trip. Human readable address.
         via : "",  // [Optional] Set an intermediate goal for getting an alternate route for example
-        destination : "Tokyo Station, Japan", // Destination of your trip. Human readable address.
-        name : "work", // Name of your destination ex: "work"
+        destination : "Boston,MA", // Destination of your trip. Human readable address.
+        name : "work" // Name of your destination ex: "work"
         /*startTime: "",
         endTime: ""*/ // Optional starttime and endtime when the traffic information should be displayed on screen. The format can be either hh:mm or hh:mm am/pm
       }]
@@ -111,7 +111,7 @@ var config = {
     rss: {
       feeds : [],  // RSS feeds list - e.g. ["rss1.com", "rss2.com"]
       refreshInterval : 120 // Number of minutes the information is refreshed
-    }
+    },
     stock: {
       names: [] // The names of the stock quotes you with to show in the official format. (e.g.: 'YHOO','AAPL','GOOG')
     },
@@ -119,7 +119,7 @@ var config = {
       autoSleep: 2400000, // How long the screen will stay awake before going to sleep (40 Mins)
       autoWake: '07:00:00', // When to automatically wake the screen up (7:00AM)
       'wake_cmd': '/opt/vc/bin/tvservice -p', // The binary and arguments used on your system to wake the screen
-      'sleep_cmd': '/opt/vc/bin/tvservice -o', // The binary and arguments used on your system to sleep the screen
+      'sleep_cmd': '/opt/vc/bin/tvservice -o' // The binary and arguments used on your system to sleep the screen
     },
     lastfm: {
       key: "", // Your last.fm api key

@@ -26,8 +26,8 @@
         var _this = this;
         const mqtt = require('mqtt');
         const request = require('request');
-        const client = mqtt.connect('mqtt://broker.hivemq.com');
-
+        //const client = mqtt.connect('mqtt://broker.hivemq.com');
+        const client = mqtt.connect('mqtt://test.mosquitto.org');
         const oxford = require('project-oxford');
         const oxclient = new oxford.Client('6ced1e1c9767493c89426d2fc4043995');
 
@@ -41,6 +41,8 @@
         var user = 'Not ready to be';
         var profiles = {};
         var done = false;
+        var calendars = {'Victor':"https://calendar.google.com/calendar/ical/3974l0bt8k0cckpqsf9idp3gvstvqbdg%40import.calendar.google.com/public/basic.ics",'Daniel': "https://calendar.google.com/calendar/ical/mlfuikhasq1o17jk38vgs3oqms%40group.calendar.google.com/public/basic.ics"}
+
 
         $scope.listening = false;
         $scope.debug = false;
@@ -155,6 +157,9 @@
                         if (response.length > 0){
                             user = profiles[response[0]['candidates'][0]['personId']];
                             greetingUpdater();
+                            greetingUpdater();
+                            config.calendar.icals[0] = calendars[user];
+                            refreshCalendar();
                         }
                         else{
                             user = "Failed to be";
