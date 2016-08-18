@@ -76,7 +76,7 @@ var config = {
     */
     // Calendar (An array of iCals)
     calendar: {
-      icals : ["webcal://mlb.am/tix/redsox_schedule_full"], // Be sure to wrap your URLs in quotes
+      icals : ["https://calendar.google.com/calendar/ical/mlfuikhasq1o17jk38vgs3oqms%40group.calendar.google.com/public/basic.ics"], // Be sure to wrap your URLs in quotes
       maxResults: 4, // Number of calender events to display (Defaults is 9)
       maxDays: 365, // Number of days to display (Default is one year)
       showCalendarNames: true // Show calendar names above events
