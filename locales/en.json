@@ -133,7 +133,27 @@
         "log_victor_in":{
             "text":"Log Victor in.",
             "voice": "log victor in",
-            "description": "Logs victor in."
+            "description": "Logs Victor in."
+        },
+        "log_daniel_in":{
+            "text":"Log Daniel in.",
+            "voice": "log daniel in",
+            "description": "Logs Daniel in."
+        },
+        "log_justin_in":{
+            "text":"Log Justin in.",
+            "voice": "log justin in",
+            "description": "Logs Justin in."
+        },
+        "log_mickey_in":{
+            "text":"Log Mickey in.",
+            "voice": "log mickey in",
+            "description": "Logs Mickey in."
+        },
+        "log_minnie_in":{
+            "text":"Log Minnie in.",
+            "voice": "log minnie in",
+            "description": "Logs Minnie in."
         },
         "image_comic": {
             "text": "Show xkcd",

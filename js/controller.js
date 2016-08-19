@@ -41,10 +41,13 @@
         var user = 'Not ready to be';
         var profiles = {};
         var done = false;
-        var calendars = {'Victor':"https://calendar.google.com/calendar/ical/mlfuikhasq1o17jk38vgs3oqms%40group.calendar.google.com/public/basic.ics"
-            ,'Daniel': "https://calendar.google.com/calendar/ical/3974l0bt8k0cckpqsf9idp3gvstvqbdg%40import.calendar.google.com/public/basic.ics"}
+        var calendars = {'Victor':"https://calendar.google.com/calendar/ical/3974l0bt8k0cckpqsf9idp3gvstvqbdg%40import.calendar.google.com/public/basic.ics"
+            ,'Daniel': "https://calendar.google.com/calendar/ical/5beu4g1kb09ojkc7ffub1g5sh47utk11%40import.calendar.google.com/public/basic.ics"
+            ,"Mickey":"https://calendar.google.com/calendar/ical/kimdm03o865mhsugnpqh0equdc2g1k8n%40import.calendar.google.com/public/basic.ics"
+            ,"Minnie":"https://calendar.google.com/calendar/ical/kimdm03o865mhsugnpqh0equdc2g1k8n%40import.calendar.google.com/public/basic.ics"
+            ,"Justin":"https://calendar.google.com/calendar/ical/m5at8duas5uakkh7a9cfok3meb428536%40import.calendar.google.com/public/basic.ics"}
 
-        https://calendar.google.com/calendar/ical/3974l0bt8k0cckpqsf9idp3gvstvqbdg%40import.calendar.google.com/public/basic.ics
+        //https://calendar.google.com/calendar/ical/3974l0bt8k0cckpqsf9idp3gvstvqbdg%40import.calendar.google.com/public/basic.ics
 
         $scope.listening = false;
         $scope.debug = false;
@@ -79,7 +82,7 @@
         // });
 
         function checkFam(){
-            //console.log('hello')
+            console.log('hello')
             //$scope.traffic = {time_to: 'Initializing, please wait to log in'};
             oxclient.face.personGroup.list().then(function(response){
                 //console.log(response);
@@ -99,7 +102,7 @@
         function makeFam(){
             oxclient.face.personGroup.create(groupID,"Mirror Users","").then(function(response,err){
                 if(err) throw Error;
-                //console.log('from');
+                console.log('from');
                 for (var i = 0; i < people.length;i++){
                     //console.log('the');
                     //console.log(people[i]);
@@ -113,11 +116,20 @@
             oxclient.face.person.create(groupID,name,"").then(function(response){
                         //console.log(response);
                         //console.log(response['personId']);
-                        //console.log(name);
+                        console.log(name);
                         profiles[response['personId']] = name;
-                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face1.JPG'}).then(function(response){added++;});
-                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face2.JPG'}).then(function(response){added++;});
-                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face3.JPG'}).then(function(response){added++;});
+                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face1.JPG'}).then(function(response){
+                            added++;
+                            console.log(response);
+                        });
+                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face2.JPG'}).then(function(response){
+                            added++;
+                            console.log(response);
+                        });
+                        oxclient.face.person.addFace(groupID,response['personId'],{'path':'faces/' + name + '/face3.JPG'}).then(function(response){
+                            added++;
+                            console.log(response);
+                        });
                     });
         }
 
@@ -177,7 +189,8 @@
         }
         checkFam();
         trainId = $interval(startTraining,18000);
-
+        console.log("before updaters");
+        
         var greetingUpdater2 = function () {
             if(typeof config.greeting !== 'undefined' && !Array.isArray(config.greeting) && typeof config.greeting.midday !== 'undefined') {
                 var hour = moment().hour();
@@ -248,7 +261,7 @@
             });
         client.on('message', (topic, message) => {  
             if(topic === 'dbmirror/test') {
-            console.log(message.toString());
+            //console.log(message.toString());
             var currentTime = new moment();
             $scope.bathroomDoor.content = message.toString();
             $scope.bathroomDoor.lastUpdated = currentTime;
@@ -459,8 +472,8 @@
             }
 
             if(typeof config.rss !== 'undefined'){
-                registerRefreshInterval(refreshRss, config.rss.refreshInterval || 30);
-                registerRefreshInterval(updateNews, 2);
+                //registerRefreshInterval(refreshRss, config.rss.refreshInterval || 30);
+                //registerRefreshInterval(updateNews, 2);
             }
 
             var getScrobblingTrack = function(){
@@ -536,6 +549,43 @@
                 config.calendar.icals[0] = calendars[user];
                 refreshCalendar();
             });
+            console.log("viccommand");
+            addCommand('log_daniel_in', function() {
+                user = "Daniel";
+                greetingUpdater();
+                greetingUpdater();
+                config.calendar.icals[0] = calendars[user];
+                refreshCalendar();
+            });
+            console.log("dancommand");
+            addCommand('log_justin_in', function() {
+                user = "Justin";
+                greetingUpdater();
+                greetingUpdater();
+                config.calendar.icals[0] = calendars[user];
+                refreshCalendar();
+            });
+            console.log("juscommand");
+            addCommand('log_mickey_in', function() {
+                user = "Mickey";
+                greetingUpdater();
+                greetingUpdater();
+                config.calendar.icals[0] = calendars[user];
+                refreshCalendar();
+            });
+            console.log("miccommand");
+            addCommand('log_minnie_in', function() {
+                user = "Minnie";
+                greetingUpdater();
+                greetingUpdater();
+                config.calendar.icals[0] = calendars[user];
+                refreshCalendar();
+            });
+            console.log("mincommand");
+
+
+
+
 
             // Turn on HDMI output
             addCommand('screen on', function() {
@@ -680,6 +730,7 @@
                     $scope.focus = "gif";
                 });
             });
+            console.log("faircommand");
 
             addCommand('log_in',function() {
                 user = 'Attempting to be'
@@ -687,6 +738,7 @@
                 //take a photo needs to be implemented
                 takePic();
             });
+            console.log("logicommand");
 
             addCommand('log_out',function(){
                 user = 'Nobody'
@@ -696,6 +748,7 @@
                 refreshCalendar();
 
             });
+            console.log("logocommand");
 
             //Show fitbit stats (registered only if fitbit is configured in the main config)
             if ($scope.fitbitEnabled) {
@@ -793,7 +846,7 @@
                 }
             });
         };
-
+        console.log("allcommand");
         _this.init();
     }
 
