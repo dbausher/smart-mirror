@@ -22,10 +22,17 @@
         }
         */
 
-        service.fairest = function(){
+        service.fairest = function(giftype){
+          var snowID = "4jOkqzylSaipW";
+          var snowID2 = "zrkgTVBtq1a4E";
+          var snowID3 = "fmKw5qN7TEXza";
+          var mirrID = "NJKKy7o0mM920";
 
-          return $http.get("http://api.giphy.com/v1/gifs/zrkgTVBtq1a4E?api_key="+config.giphy.key).
+          var gifphs = {"mirror" : mirrID, "snow white": snowID3};
+
+          return $http.get("http://api.giphy.com/v1/gifs/"+ gifphs[giftype] + "?api_key="+config.giphy.key).
             then(function(response) {
+              console.log(response);
                   return service.gif = response.data;
               });
         }

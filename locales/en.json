@@ -120,6 +120,11 @@
             "voice": "(magic mirror on the wall)(mirror mirror on the wall)(,) Who is the fairest (of them)(one of)(all)(?)",
             "description": " Shows the fairest one of all."
         },
+        "show_mirror":{
+            "text":"Magic Mirror, show yourself!",
+            "voice": "(spirit of the) mirror (show)(reveal) yourself (to me)",
+            "description": " Shows the man behind the mirror."
+        },
         "log_in":{
             "text":"Log me in.",
             "voice": "log (me) in",

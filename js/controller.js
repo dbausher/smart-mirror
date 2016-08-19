@@ -725,7 +725,13 @@
             });
             //Show Snow White
             addCommand('show_fairest', function(img) {
-                GiphyService.fairest().then(function(){
+                GiphyService.fairest("snow white").then(function(){
+                    $scope.gifimg = GiphyService.giphyImg();
+                    $scope.focus = "gif";
+                });
+            });
+            addCommand('show_mirror', function(img) {
+                GiphyService.fairest("mirror").then(function(){
                     $scope.gifimg = GiphyService.giphyImg();
                     $scope.focus = "gif";
                 });
