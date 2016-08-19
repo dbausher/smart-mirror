@@ -69,7 +69,7 @@
             $scope.fitbitEnabled = true;
         }
 
-        // LINUX ONLY
+        // LINUX ONLY change sometimes
         var NodeWebcam = require( "node-webcam" );
         var opts = { location: "faces/" };
         var Webcam = NodeWebcam.create( opts );
